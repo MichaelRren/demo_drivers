@@ -1,14 +1,19 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=68", "setuptools_scm[toml]>=7", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "customized-drivers"
-version = "0.1.0"
+name = "demo_drivers"
+dynamic = ["version"]
 dependencies = [
     "numpy==1.26.4",
     "requires>=2.31.0"
 ]
+
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "node-and-date"
+fallback_version = "0.0"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
