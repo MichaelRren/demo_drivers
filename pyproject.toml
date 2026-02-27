@@ -18,5 +18,5 @@ fallback_version = "0.0"
 [tool.setuptools]
 package-dir = {"" = "src"}
 
-[tools.setuptools.packages.find]
+[tool.setuptools.packages.find]
 where = ["src"]
