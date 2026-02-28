@@ -3,20 +3,23 @@ import os
 from importlib.metadata import version
 
 class Driver:
-    def __init__(self, task_config: dict):
-        self.task_config = task_config
+    def __init__(self):
+        self.version = "alpha"
 
-    def run(self, molecule_path: str, working_dir: str) -> str:
+    def run(self, molecule_path: str, config_path: str):
         def get_version(name: str):
             try:
                 return version(name)
             except Exception:
                 return "unknown"
 
+        with open(config_path, "r") as f:
+            task_config = f.read()
+
         info = {
-            "driver": "alpha",
+            "driver": self.version,
             "molecule_path": molecule_path,
-            "working_dir": working_dir,
+            "config_path": config_path,
             "versions": {
                 "numpy": get_version("numpy"),
                 "requests": get_version("requests"),
@@ -25,11 +28,8 @@ class Driver:
                 "pysisyphus": get_version("pysisyphus"),
                 "volcengine-qcworker": get_version("volcengine-qcworker"),
             },
-            "task_config": self.task_config,
+            "task_config": task_config,
         }
 
-        output_path = os.path.join(working_dir, "alpha_output.json")
-        with open(output_path, "w") as f:
+        with open("info.json", "w") as f:
             json.dump(info, f, indent=2)
-
-        return output_path
